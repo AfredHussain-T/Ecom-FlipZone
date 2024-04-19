@@ -4,8 +4,11 @@ import axios from 'axios';
 import {useParams} from 'react-router-dom'
 import ProductCard from "../components/ProductCard";
 import "../styles/ProductDetailsStyles.css";
+import { useCart } from "../context/cart";
+import toast from 'react-hot-toast'
 
 const ProductDetails = () => {
+    const [cart, setCart] = useCart();
     const params = useParams();
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
@@ -56,7 +59,11 @@ const getSimilarProducts = async (pid, cid) => {
                         currency: "USD",
                     })}</h6>
                     
-                    <button className="btn btn-secondary ms-1">ADD TO BAG</button>
+                    <button className="btn btn-secondary ms-1" onClick={() => {
+                      setCart([...cart, product]);
+                      localStorage.setItem('cart', JSON.stringify([...cart, product]));
+                      toast.success("Item Added To Cart");
+                    }}>ADD TO BAG</button>
             </div>
         </div>
         <hr />
