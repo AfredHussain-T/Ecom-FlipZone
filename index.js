@@ -18,7 +18,9 @@ connectDB();
 const app = express();
 
 //middelwares
-app.use(cors());
+app.use(cors({
+  origin:["http://localhost:3000", "https://flipzone-mern.onrender.com"]
+}));
 app.use(express.json());
 app.use(morgan("dev"));
 
